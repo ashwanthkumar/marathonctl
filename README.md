@@ -16,15 +16,34 @@ If you've maraton running in HA mode you can specify multiple marathon URLs as
 }
 ```
 
-## Deploy Apps
-`marathon deploy` helps you deploy applications to your Marathon setup from command line. It takes an app definition and tries to deploy it.
+## Usage
 
 ```
-$ marathon deploy -h
+$ marathonctl
+Command line client to Marathon
+
+Usage:
+  marathonctl [command]
+
+Available Commands:
+  deploy      Deploy an app using Marathon's app definition
+  version     Version of the Marathon CLI
+
+Flags:
+  -h, --help   help for marathonctl
+
+Use "marathonctl [command] --help" for more information about a command.
+```
+
+## Deploy Apps
+`marathonctl deploy` helps you deploy applications to your Marathon setup from command line. It takes an app definition and tries to deploy it.
+
+```
+$ marathonctl deploy -h
 Deploy an app using Marathon's app definition
 
 Usage:
-  marathon deploy <app.json> [flags]
+  marathonctl deploy <app.json> [flags]
 
 Flags:
   -d, --dry-run              Print the final application configuration but don't deploy
