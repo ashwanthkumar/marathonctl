@@ -9,7 +9,7 @@ type Marathon struct{
   Url string
 }
 
-var request = gorequest.New()
+var httpClient = gorequest.New()
 
 func handle(response gorequest.Response, body string, errs []error) (string, error) {
   return string(body), combineErrors(errs)

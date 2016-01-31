@@ -4,24 +4,9 @@ import (
   "encoding/json"
 )
 
-type Deployments struct {
-  Deployments []ActiveDeployment
-}
-func (d *Deployments) Contains(deployment *Deployment) bool {
-    for _, activeDeployment := range d.Deployments {
-      if activeDeployment.Id == deployment.DeploymentID && activeDeployment.Version == deployment.Version {
-        return true
-      }
-    }
-    return false
-}
-type ActiveDeployment struct {
-  Version       string `json:"version"`
-  Id            string `json:"id"`
-}
 // Get active deployments in the cluster
 func (m *Marathon) Deployments() (*Deployments, error) {
-  body, err := handle(request.Get(m.Url + "/v2/deployments").End())
+  body, err := handle(httpClient.Get(m.Url + "/v2/deployments").End())
   if err != nil {
     return nil, err
   }
@@ -42,4 +27,21 @@ func (m *Marathon) IsStillDeploying(deployment *Deployment) (bool, error) {
 
   isPresent := deployments.Contains(deployment)
   return isPresent, nil
+}
+
+type Deployments struct {
+  Deployments []ActiveDeployment
+}
+func (d *Deployments) Contains(deployment *Deployment) bool {
+    for _, activeDeployment := range d.Deployments {
+      if activeDeployment.Id == deployment.DeploymentID && activeDeployment.Version == deployment.Version {
+        return true
+      }
+    }
+    return false
+}
+
+type ActiveDeployment struct {
+  Version       string `json:"version"`
+  Id            string `json:"id"`
 }
