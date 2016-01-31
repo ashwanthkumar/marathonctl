@@ -24,8 +24,8 @@ func TestDeploy(t *testing.T) {
   assert.NoError(t, err)
 
   actualDeployment := Deployment {
-    DeploymentID: "83b215a6-4e26-4e44-9333-5c385eda6438",
-    Version: "2014-08-26T07:37:50.462Z",
+    DeploymentID: "573aff0d-c7bc-48f5-b453-8b450beeb241",
+    Version: "2016-01-31T18:21:29.964Z",
   }
 
   assert.Equal(t, deployment, &actualDeployment)
@@ -37,12 +37,23 @@ func TestDeployments(t *testing.T) {
   assert.NoError(t, err)
 
   deploy1 := ActiveDeployment {
-    Version: "2016-01-31T18:21:29.964Z",
     Id: "573aff0d-c7bc-48f5-b453-8b450beeb241",
+    Version: "2016-01-31T18:21:29.964Z",
   }
   actualDeployments := Deployments {
     Deployments: []ActiveDeployment {deploy1},
   }
 
   assert.Equal(t, deployments, &actualDeployments)
+}
+
+func TestIsStillDeploying(t *testing.T) {
+  marathon := newFakeMarathonServer(t)
+  deployment, err := marathon.Deploy("my-app", "appspec", false)
+  assert.NoError(t, err)
+
+  stillHappening, err := marathon.IsStillDeploying(deployment)
+  assert.NoError(t, err)
+
+  assert.Equal(t, stillHappening, true)
 }
