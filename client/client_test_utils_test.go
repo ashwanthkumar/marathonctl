@@ -23,6 +23,14 @@ func newFakeMarathonServer(t *testing.T) Marathon {
       writer.Header().Add("Content-Type", "application/json")
       writer.Write(contents)
     })
+    fakeMarathonHandler.HandleFunc("/v2/apps/my-app", func(writer http.ResponseWriter, reader *http.Request) {
+      contents, err := ioutil.ReadFile("../test-fixtures/deploy-app.json")
+      if err != nil {
+        t.Fatal(err)
+      }
+      writer.Header().Add("Content-Type", "application/json")
+      writer.Write(contents)
+    })
     fakeServer = httptest.NewServer(fakeMarathonHandler)    
   })
 
