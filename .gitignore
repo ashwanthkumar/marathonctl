@@ -1,4 +1,4 @@
-marathon
-marathon-darwin*
-marathon-linux*
-
+marathonctl
+marathonctl-darwin*
+marathonctl-linux*
+app.json
