@@ -30,3 +30,19 @@ func TestDeploy(t *testing.T) {
 
   assert.Equal(t, deployment, &actualDeployment)
 }
+
+func TestDeployments(t *testing.T) {
+  marathon := newFakeMarathonServer(t)
+  deployments, err := marathon.Deployments()
+  assert.NoError(t, err)
+
+  deploy1 := ActiveDeployment {
+    Version: "2016-01-31T18:21:29.964Z",
+    Id: "573aff0d-c7bc-48f5-b453-8b450beeb241",
+  }
+  actualDeployments := Deployments {
+    Deployments: []ActiveDeployment {deploy1},
+  }
+
+  assert.Equal(t, deployments, &actualDeployments)
+}

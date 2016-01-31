@@ -36,6 +36,25 @@ func (m *Marathon) Deploy(app string, appSpec string, force bool) (*Deployment, 
   return &deployment, err
 }
 
+type Deployments struct {
+  Deployments []ActiveDeployment
+}
+type ActiveDeployment struct {
+  Version       string `json:"version"`
+  Id            string `json:"id"`
+}
+// Get active deployments in the cluster
+func (m *Marathon) Deployments() (*Deployments, error) {
+  body, err := handle(request.Get(m.Url + "/v2/deployments").End())
+  if err != nil {
+    return nil, err
+  }
+
+  var deployments Deployments
+  err = json.Unmarshal([]byte(body), &deployments.Deployments)
+  return &deployments, err
+}
+
 type ServerVersion struct {
   Version         string `json:"version"`
   Name            string `json:"name"`

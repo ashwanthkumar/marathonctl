@@ -1,0 +1,1 @@
+[{"currentStep":1,"currentActions":[{"action":"RestartApplication","app":"/my-app"}],"affectedApps":["/my-app"],"version":"2016-01-31T18:21:29.964Z","id":"573aff0d-c7bc-48f5-b453-8b450beeb241","totalSteps":1,"steps":[[{"action":"RestartApplication","app":"/my-app"}]]}]
