@@ -21,19 +21,19 @@ type Deployment struct {
 // appSpec - App specification in a valid JSON string
 // force - Should we do a force deployment?
 // returns deploymentID in string, error if any
-func (m *Marathon) Deploy(app string, appSpec string, force bool) (Deployment, error) {
-  var deployment Deployment
+func (m *Marathon) Deploy(app string, appSpec string, force bool) (*Deployment, error) {
   request := request.Put(m.Url + "/v2/apps/" + app)
   if force {
     request = request.Query("force=true")
   }
   body, err := handle(request.End())
   if err != nil {
-    return deployment, err
+    return nil, err
   }
 
+  var deployment Deployment
   err = json.Unmarshal([]byte(body), &deployment)
-  return deployment, err
+  return &deployment, err
 }
 
 type ServerVersion struct {
@@ -41,15 +41,15 @@ type ServerVersion struct {
   Name            string `json:"name"`
 }
 // Get the server version of the Marathon instance
-func (m *Marathon) ServerVersion() (ServerVersion, error) {
-  var version ServerVersion
+func (m *Marathon) ServerVersion() (*ServerVersion, error) {
   body, err := handle(request.Timeout(5000 * time.Millisecond).Get(m.Url + "/v2/info").End())
   if err != nil {
-    return version, err
+    return nil, err
   }
 
+  var version ServerVersion
   err = json.Unmarshal([]byte(body), &version)
-  return version, err
+  return &version, err
 }
 
 func handle(response gorequest.Response, body string, errs []error) (string, error) {

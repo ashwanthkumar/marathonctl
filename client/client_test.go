@@ -15,7 +15,7 @@ func TestServerVersion(t *testing.T) {
     Version: "0.8.1",
     Name: "marathon",
   }
-  assert.Equal(t, version, actualVersion)
+  assert.Equal(t, version, &actualVersion)
 }
 
 func TestDeploy(t *testing.T) {
@@ -28,5 +28,5 @@ func TestDeploy(t *testing.T) {
     Version: "2014-08-26T07:37:50.462Z",
   }
 
-  assert.Equal(t, deployment, actualDeployment)
+  assert.Equal(t, deployment, &actualDeployment)
 }
