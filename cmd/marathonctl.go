@@ -25,7 +25,6 @@ func AttachHandler(handler CommandHandler) func (*cobra.Command, []string) {
     err := handler(args)
     if err != nil {
       log.Printf("[Error] %s", err.Error())
-      cmd.Help()
       os.Exit(1)
     }
   }
