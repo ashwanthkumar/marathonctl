@@ -1,6 +1,7 @@
 package client
 
 import (
+  "time"
   "encoding/json"
 )
 
@@ -9,7 +10,10 @@ import (
 // force - Should we do a force deployment?
 // returns deploymentID in string, error if any
 func (m *Marathon) Deploy(app string, appSpec string, force bool) (*Deployment, error) {
-  httpClient := httpClient.Put(m.Url + "/v2/apps/" + app)
+  httpClient := httpClient.
+    Timeout(time.Second * 10).
+    Put(m.Url + "/v2/apps/" + app).
+    Send(appSpec)
   if force {
     httpClient = httpClient.Query("force=true")
   }

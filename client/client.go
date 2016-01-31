@@ -1,6 +1,7 @@
 package client
 
 import (
+  "encoding/json"
   "errors"
   "github.com/parnurzeal/gorequest"
 )
@@ -12,7 +13,16 @@ type Marathon struct{
 var httpClient = gorequest.New()
 
 func handle(response gorequest.Response, body string, errs []error) (string, error) {
-  return string(body), combineErrors(errs)
+  if(response != nil) {
+    if(response.StatusCode != 200 && body != "") {
+      var errorResponse map[string]interface{}
+      json.Unmarshal([]byte(body), &errorResponse)
+      errs = append(errs, errors.New(errorResponse["message"].(string)))
+    } else if(response.StatusCode != 200) {
+      errs = append(errs, errors.New(response.Status))
+    }
+  }
+  return body, combineErrors(errs)
 }
 
 func combineErrors(errs []error) error {
