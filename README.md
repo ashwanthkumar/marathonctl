@@ -49,6 +49,7 @@ Flags:
   -d, --dry-run              Print the final application configuration but don't deploy
   -e, --environment string   Environment to deploy (default "test")
   -f, --force                Force deploy the app
+  -t, --timeout int          timeout in seconds for deployment to complete, else we'll fail (default 900)
 ```
 
 ### Application Definition
