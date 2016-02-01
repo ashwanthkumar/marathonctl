@@ -1,22 +1,8 @@
 # Marathon CLI
 CLI tool to access and deploy apps and services to [Marathon](https://mesosphere.github.io/marathon/).
 
-## Configuration
-You need to create a configuration file `$HOME/.marathon.json` with the following contents
-```
-{
-  "url": "http://marathon.url:8080"
-}
-```
-
-If you've maraton running in HA mode you can specify multiple marathon URLs as
-```
-{
-  "url": "http://marathon1.url:8080,marathon2.url:8080,marathon3.url:8080"
-}
-```
-
 ## Usage
+You can download a binary distribution from the [releases](https://github.com/ashwanthkumar/marathonctl/releases). 
 
 ```
 $ marathonctl
@@ -33,6 +19,21 @@ Flags:
   -h, --help   help for marathonctl
 
 Use "marathonctl [command] --help" for more information about a command.
+```
+
+## Configuration
+You need to create a configuration file `$HOME/.marathon.json` with the following contents
+```
+{
+  "url": "http://marathon.url:8080"
+}
+```
+
+If you've maraton running in HA mode you can specify multiple marathon URLs as
+```
+{
+  "url": "http://marathon1.url:8080,marathon2.url:8080,marathon3.url:8080"
+}
 ```
 
 ## Deploy Apps
