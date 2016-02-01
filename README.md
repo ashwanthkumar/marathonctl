@@ -53,7 +53,10 @@ Flags:
 ```
 
 ### Application Definition
-The application definition (`app.json`) that's passed it treated as a [Go Template](https://golang.org/pkg/text/template/) and rendered. The available variables for the template is `{{ .DEPLOY_ENV }}`. You can also access environment variables using the convention `{{ .Env.GO_PIPELINE_LABEL }}`, where `GO_PIPELINE_LABEL` is an environment variable. 
+The application definition (`app.json`) that's passed it treated as a [Go Template](https://golang.org/pkg/text/template/) and rendered. The available variables for the template is `{{ .DEPLOY_ENV }}`. 
+
+#### Using Environment Variables
+You can also access environment variables in your app.json using the convention `{{ .Env.GO_PIPELINE_LABEL }}`, where `GO_PIPELINE_LABEL` is an environment variable. 
 
 Example app.json file could be something like
 ```
