@@ -16,8 +16,12 @@ func handle(response gorequest.Response, body string, errs []error) (string, err
   if(response != nil) {
     if(response.StatusCode != 200 && body != "") {
       var errorResponse map[string]interface{}
-      json.Unmarshal([]byte(body), &errorResponse)
-      errs = append(errs, errors.New(errorResponse["message"].(string)))
+      err := json.Unmarshal([]byte(body), &errorResponse)
+      if err != nil {
+        errs = append(errs, err)
+      } else {
+        errs = append(errs, errors.New(errorResponse["message"].(string)))
+      }
     } else if(response.StatusCode != 200) {
       errs = append(errs, errors.New(response.Status))
     }
