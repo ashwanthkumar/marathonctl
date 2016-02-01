@@ -29,13 +29,6 @@ You need to create a configuration file `$HOME/.marathon.json` with the followin
 }
 ```
 
-If you've maraton running in HA mode you can specify multiple marathon URLs as
-```
-{
-  "url": "http://marathon1.url:8080,marathon2.url:8080,marathon3.url:8080"
-}
-```
-
 ## Deploy Apps
 `marathonctl deploy` helps you deploy applications to your Marathon setup from command line. It takes an app definition and tries to deploy it.
 
