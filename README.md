@@ -1,3 +1,5 @@
+[![Build Status](https://snap-ci.com/ashwanthkumar/marathonctl/branch/master/build_image)](https://snap-ci.com/ashwanthkumar/marathonctl/branch/master)
+
 # Marathon CLI
 CLI tool to access and deploy apps and services to [Marathon](https://mesosphere.github.io/marathon/).
 
