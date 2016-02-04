@@ -1,13 +1,14 @@
 APPNAME = marathonctl
+VERSION=0.0.2
 
 build:
 	go build -o ${APPNAME} .
 
 build-linux:
-	GOOS=linux GOARCH=amd64 go build -ldflags "-s" -v -o ${APPNAME}-linux-amd64 .
+	GOOS=linux GOARCH=amd64 go build -ldflags "-s -X main.APP_VERSION=${VERSION}" -v -o ${APPNAME}-linux-amd64 .
 
 build-mac:
-	GOOS=darwin GOARCH=amd64 go build -ldflags "-s" -v -o ${APPNAME}-darwin-amd64 .
+	GOOS=darwin GOARCH=amd64 go build -ldflags "-s -X main.APP_VERSION=${VERSION}" -v -o ${APPNAME}-darwin-amd64 .
 
 build-all: build-mac build-linux
 
