@@ -14,7 +14,7 @@ var httpClient = gorequest.New()
 
 func handle(response gorequest.Response, body string, errs []error) (string, error) {
   if(response != nil) {
-    if(response.StatusCode != 200 && body != "") {
+    if((response.StatusCode != 200 && response.StatusCode != 201) && body != "") {
       var errorResponse map[string]interface{}
       err := json.Unmarshal([]byte(body), &errorResponse)
       if err != nil {
@@ -22,7 +22,7 @@ func handle(response gorequest.Response, body string, errs []error) (string, err
       } else {
         errs = append(errs, errors.New(errorResponse["message"].(string)))
       }
-    } else if(response.StatusCode != 200) {
+    } else if(response.StatusCode != 200 && response.StatusCode != 201) {
       errs = append(errs, errors.New(response.Status))
     }
   }
