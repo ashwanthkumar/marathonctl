@@ -17,9 +17,8 @@ func init() {
   AddDefaults(c)
 
   err := c.ReadInConfig()
-  // ignore the file not found error
+  // ignore the file not found error and catch everything else
   if !os.IsNotExist(err) {
-    // most like a parser error
     fmt.Printf("%v\n", err)
     os.Exit(1)
   }
