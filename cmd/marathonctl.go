@@ -10,7 +10,6 @@ import (
 )
 
 var marathon client.Marathon
-var marathonHost string
 
 // Main command for Cobra.
 var MarathonCtl = &cobra.Command{
@@ -23,13 +22,8 @@ type CommandHandler func(args []string) error
 
 func AttachHandler(handler CommandHandler) func (*cobra.Command, []string) {
   return func (cmd *cobra.Command, args []string) {
-    host := marathonHost
-    if host == "" {
-      host = config.GetUrl()
-    }
-
     marathon = client.Marathon {
-      Url: host,
+      Url: config.GetUrl(),
     }
     err := handler(args)
     if err != nil {
@@ -45,7 +39,8 @@ func init() {
 }
 
 func prepareFlagsForMarathonCtl() {
+  var str string // ignored since we directly pass the flag values as config overrides
   MarathonCtl.PersistentFlags().StringVarP(
-    &marathonHost, "host", "", "", "Marathon host in http://host:port form. Overrides the value in ~/.marathon.json")
+    &str, "host", "", "", "Marathon host in http://host:port form. Overrides the value in ~/.marathon.json")
   config.BindUrl(MarathonCtl.PersistentFlags().Lookup("host"))
 }
