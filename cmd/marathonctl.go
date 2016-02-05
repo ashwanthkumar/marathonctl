@@ -25,7 +25,6 @@ func AttachHandler(handler CommandHandler) func (*cobra.Command, []string) {
   return func (cmd *cobra.Command, args []string) {
     host := marathonHost
     if host == "" {
-      config.Initialize()
       host = config.GetUrl()
     }
 
@@ -47,5 +46,6 @@ func init() {
 
 func prepareFlagsForMarathonCtl() {
   MarathonCtl.PersistentFlags().StringVarP(
-    &marathonHost, "host", "", "", "Marathon Host to deploy. Overrides the value in ~/.marathon.json")
+    &marathonHost, "host", "", "", "Marathon host in http://host:port form. Overrides the value in ~/.marathon.json")
+  config.BindUrl(MarathonCtl.PersistentFlags().Lookup("host"))
 }

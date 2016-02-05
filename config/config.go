@@ -1,49 +1,34 @@
 package config
 
 import (
-  "log"
   "fmt"
   "os"
 
   "github.com/spf13/viper"
+  "github.com/spf13/pflag"
 )
 
 var c = viper.New()
-var initialized bool = false
 
 func init() {
   c.SetConfigName(".marathon")
   c.SetConfigType("json")
   c.AddConfigPath("$HOME/")
+  AddDefaults(c)
+
+  err := c.ReadInConfig()
+  // ignore the file not found error
+  if !os.IsNotExist(err) {
+    // most like a parser error
+    fmt.Printf("%v\n", err)
+    os.Exit(1)
+  }
+}
+
+func BindUrl(flag *pflag.Flag) {
+  c.BindPFlag("url", flag)
 }
 
 func GetUrl() string {
-  notNullConfiguration("url")
   return c.GetString("url")
-}
-
-// TODO - Add support for auth tokens
-
-// For lazy init of the configuration
-func Initialize() {
-  if !initialized {
-    err := c.ReadInConfig()
-    if os.IsNotExist(err) {
-      fmt.Println("Config file cannotbe found at your ~/.marathon.json")
-      fmt.Println(err)
-      os.Exit(1)
-    }
-
-    if err != nil { // Handle errors reading the config file
-        panic(fmt.Errorf("Fatal error config file: %s \n", err))
-    }
-
-    initialized = true
-  }
-}
-
-func notNullConfiguration(key string) {
-  if c.GetString(key) == "" {
-    log.Fatal(key + " configuration is not found in " + c.ConfigFileUsed())
-  }
 }
