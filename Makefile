@@ -1,5 +1,5 @@
 APPNAME = marathonctl
-VERSION=0.0.3-dev
+VERSION=0.0.3
 
 build:
 	go build -o ${APPNAME} .
