@@ -18,18 +18,21 @@ Available Commands:
   version     Version of the Marathon CLI
 
 Flags:
-  -h, --help   help for marathonctl
+  -h, --help          help for marathonctl
+      --host string   Marathon host in http://host:port form. Overrides the value in ~/.marathon.json
 
 Use "marathonctl [command] --help" for more information about a command.
 ```
 
 ## Configuration
-You need to create a configuration file `$HOME/.marathon.json` with the following contents
+You can optionally create a configuration file `$HOME/.marathon.json` with the following contents or pass `--host http://marathon.url:8080` to all the commands that you pass.
+
 ```
 {
   "url": "http://marathon.url:8080"
 }
 ```
+
 
 ## Deploy Apps
 `marathonctl deploy` helps you deploy applications to your Marathon setup from command line. It takes an app definition and tries to deploy it.
