@@ -7,7 +7,7 @@ import (
 
 func AddDefaults(c *viper.Viper) {
   c.SetDefault("marathon.host", "http://localhost:8080")
-  c.SetDefault("mesos.host", "localhost:5050")
+  c.SetDefault("mesos.master", "localhost:5050")
   c.SetDefault("zk.host", "localhost:2181")
 
   cachePath, _ := homedir.Expand("~/.marathonctl/packages")
