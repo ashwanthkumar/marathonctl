@@ -27,6 +27,11 @@ setup:
 	go get github.com/stretchr/testify/assert
 
 test:
+	name=*
+	go test github.com/ashwanthkumar/marathonctl/${name}
+
+tests:
+	go test github.com/ashwanthkumar/marathonctl/packages
 	go test github.com/ashwanthkumar/marathonctl/client
 
 install: build
