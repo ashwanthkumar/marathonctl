@@ -25,6 +25,15 @@ func TestRepositoriesAdd(t *testing.T) {
   assert.Equal(t, repos.Exists("r4"), true)
 }
 
+func TestRepositoriesGet(t *testing.T) {
+  repos := newRepositories([]Repository {
+    repo("r1", "loc1"), repo("r2", "loc2"),
+  })
+  actual := repos.Get("r1")
+  expected := repo("r1", "loc1")
+  assert.Equal(t, &expected, actual)
+}
+
 func TestRepositoriesSerialize(t *testing.T) {
   repos := newRepositories([]Repository {
     repo("universe", "github.com/ashwanthkumar/marathonctl-universe"),
@@ -43,6 +52,11 @@ func TestDeserialize(t *testing.T) {
   repos, err := Deserialize([]byte(reposInJson))
   assert.NoError(t, err)
   assert.Equal(t, repos.Exists("universe"), true)
+}
+
+func TestDefaultRepositories(t *testing.T) {
+  repos := DefaultRepositories()
+  assert.Equal(t, true, repos.Exists("universe"))
 }
 
 func newRepositories(repos []Repository) Repositories {

@@ -23,6 +23,7 @@ setup:
 	go get github.com/gosuri/uiprogress
 	go get github.com/hashicorp/go-getter
 	go get github.com/mitchellh/go-homedir
+	go get github.com/joeshaw/multierror
 	# Test deps
 	go get github.com/stretchr/testify/assert
 

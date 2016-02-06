@@ -7,7 +7,7 @@ import (
 
 func AddDefaults(c *viper.Viper) {
   c.SetDefault("url", "http://localhost:8080")
-  cachePath, _ := homedir.Expand("~/.marathonctl/")
+  cachePath, _ := homedir.Expand("~/.marathonctl/packages")
   c.SetDefault("package-cache-path", cachePath)
   c.SetDefault("package-repo", "github.com/ashwanthkumar/marathonctl-universe")
 }

@@ -1,10 +1,8 @@
 package cmd
 
 import (
-  "fmt"
-  "github.com/ashwanthkumar/marathonctl/config"
+  "github.com/ashwanthkumar/marathonctl/packages"
   "github.com/spf13/cobra"
-  fetcher "github.com/hashicorp/go-getter"
 )
 
 var PackageUpdate = &cobra.Command{
@@ -15,9 +13,7 @@ var PackageUpdate = &cobra.Command{
 }
 
 func updatePackageCache(args []string) (err error) {
-  fmt.Printf("marathonctl is updating it's package cache in %s from %s\n", config.GetPackageCachePath(), config.GetPackageRepo())
-  err = fetcher.Get(config.GetPackageCachePath(), config.GetPackageRepo())
-  return err
+  return packages.UpdateAll()
 }
 
 func init() {

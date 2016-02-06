@@ -26,6 +26,15 @@ func (r *Repositories) Exists(repo string) bool {
   return false
 }
 
+func (r *Repositories) Get(repo string) *Repository {
+  for _, repository := range *r {
+    if repository.Name == repo {
+      return &repository
+    }
+  }
+  return nil
+}
+
 func (r *Repositories) Add(repo Repository) *Repositories {
   *r = append(*r, repo)
   return r
@@ -39,4 +48,14 @@ func Deserialize(data []byte) (*Repositories, error) {
   var repos Repositories
   err := json.Unmarshal(data, &repos)
   return &repos, err
+}
+
+func DefaultRepositories()  *Repositories {
+  defaultRepo := Repository {
+    Name: "universe",
+    Loc: "github.com/ashwanthkumar/marathonctl-universe",
+  }
+  var DefaultRepo Repositories
+  DefaultRepo = []Repository { defaultRepo }
+  return &DefaultRepo
 }
