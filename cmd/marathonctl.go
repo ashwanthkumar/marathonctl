@@ -23,7 +23,7 @@ type CommandHandler func(args []string) error
 func AttachHandler(handler CommandHandler) func (*cobra.Command, []string) {
   return func (cmd *cobra.Command, args []string) {
     marathon = client.Marathon {
-      Url: config.GetUrl(),
+      Url: config.GetString("marathon.host"),
     }
     err := handler(args)
     if err != nil {
@@ -41,6 +41,10 @@ func init() {
 func prepareFlagsForMarathonCtl() {
   var str string // ignored since we directly pass the flag values as config overrides
   MarathonCtl.PersistentFlags().StringVarP(
-    &str, "host", "", "", "Marathon host in http://host:port form. Overrides the value in ~/.marathon.json")
-  config.BindUrl(MarathonCtl.PersistentFlags().Lookup("host"))
+    &str, "marathon.host", "", config.GetString("marathon.host"), "Marathon host in http://host:port form.")
+  MarathonCtl.PersistentFlags().StringVarP(
+    &str, "mesos.master", "", config.GetString("mesos.master"), "Mesos host in host:port form.")
+  MarathonCtl.PersistentFlags().StringVarP(
+    &str, "zk.host", "", config.GetString("zk.host"), "ZK host in host:port form.")
+  config.BindFlags(MarathonCtl.PersistentFlags())
 }

@@ -11,31 +11,27 @@ import (
 var c = viper.New()
 
 func init() {
-  c.SetConfigName(".marathon")
+  c.SetConfigName("config")
   c.SetConfigType("json")
-  c.AddConfigPath("$HOME/")
+  c.AddConfigPath("$HOME/.marathonctl")
   AddDefaults(c)
 
   err := c.ReadInConfig()
   // ignore the file not found error and catch everything else
-  if !os.IsNotExist(err) {
-    fmt.Printf("%v\n", err)
+  if err != nil && !os.IsNotExist(err) {
+    fmt.Printf("Err %v\n", err)
     os.Exit(1)
   }
 }
 
-func BindUrl(flag *pflag.Flag) {
-  c.BindPFlag("url", flag)
+func BindFlags(flags *pflag.FlagSet) {
+  c.BindPFlags(flags)
 }
 
-func GetUrl() string {
-  return c.GetString("url")
+func GetString(key string) string {
+  return c.GetString(key)
 }
 
 func GetPackageCachePath() string {
-  return c.GetString("package-cache-path")
-}
-
-func GetPackageRepo() string {
-  return c.GetString("package-repo")
+  return GetString("package-cache-path")
 }
