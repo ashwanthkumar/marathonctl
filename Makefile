@@ -21,6 +21,8 @@ setup:
 	go get github.com/spf13/viper
 	go get github.com/parnurzeal/gorequest
 	go get github.com/gosuri/uiprogress
+	go get github.com/hashicorp/go-getter
+	go get github.com/mitchellh/go-homedir
 	# Test deps
 	go get github.com/stretchr/testify/assert
 

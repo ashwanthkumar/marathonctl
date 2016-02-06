@@ -31,3 +31,11 @@ func BindUrl(flag *pflag.Flag) {
 func GetUrl() string {
   return c.GetString("url")
 }
+
+func GetPackageCachePath() string {
+  return c.GetString("package-cache-path")
+}
+
+func GetPackageRepo() string {
+  return c.GetString("package-repo")
+}
