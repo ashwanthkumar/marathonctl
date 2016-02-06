@@ -1,8 +1,6 @@
 package packages
 
 import (
-  // "io/ioutil"
-  // "fmt"
   "encoding/json"
 )
 
