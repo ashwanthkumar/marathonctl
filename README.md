@@ -15,21 +15,32 @@ Usage:
 
 Available Commands:
   deploy      Deploy an app using Marathon's app definition
+  package     Manage packages which needs to be installed on Marathon
   version     Version of the Marathon CLI
 
 Flags:
-  -h, --help          help for marathonctl
-      --host string   Marathon host in http://host:port form. Overrides the value in ~/.marathon.json
+  -h, --help                   help for marathonctl
+      --marathon.host string   Marathon host in http://host:port form. (default "http://localhost:8080")
+      --mesos.master string    Mesos host in host:port form. (default "localhost:5050")
+      --zk.host string         ZK host in host:port form. (default "localhost:2181")
 
 Use "marathonctl [command] --help" for more information about a command.
 ```
 
 ## Configuration
-You can optionally create a configuration file `$HOME/.marathon.json` with the following contents or pass `--host http://marathon.url:8080` to all the commands that you pass.
+You can optionally create a configuration file `$HOME/.marathonctl/config.json` with the following contents, which can be overriden using the above flags. 
 
 ```
 {
-  "url": "http://marathon.url:8080"
+  "marathon": {
+    "host": "http://marathon.host:8080"
+  },
+  "mesos": {
+    "master": "mesos.master:5050"
+  },
+  "zk": {
+    "host": "zk01:2181"
+  }
 }
 ```
 
