@@ -26,11 +26,10 @@ setup:
 	# Test deps
 	go get github.com/stretchr/testify/assert
 
-test:
-	name=*
+test-only:
 	go test github.com/ashwanthkumar/marathonctl/${name}
 
-tests:
+test:
 	go test github.com/ashwanthkumar/marathonctl/packages
 	go test github.com/ashwanthkumar/marathonctl/client
 
