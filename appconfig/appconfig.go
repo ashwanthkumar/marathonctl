@@ -5,11 +5,11 @@ import (
   "bytes"
   "os"
   "text/template"
+
+  "github.com/ashwanthkumar/marathonctl/config"
 )
 
-type Context struct {
-  DEPLOY_ENV string
-}
+type Context map[string]interface{}
 
 func (c *Context) Env() map[string]string {
   env := make(map[string]string)
@@ -22,7 +22,9 @@ func (c *Context) Env() map[string]string {
 
 func Render(environment, path string) (string, error) {
   var configInBytes bytes.Buffer
-  context := Context{ DEPLOY_ENV: environment}
+  var context Context
+  context = config.AllSettings()
+  context["DEPLOY_ENV"] = environment
   err := template.Must(template.ParseFiles(path)).Execute(&configInBytes, &context)
   return configInBytes.String(), err
 }

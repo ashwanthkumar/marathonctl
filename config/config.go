@@ -35,3 +35,7 @@ func GetString(key string) string {
 func GetPackageCachePath() string {
   return GetString("package-cache-path")
 }
+
+func AllSettings() map[string]interface{} {
+  return c.AllSettings()
+}
