@@ -25,6 +25,15 @@ func TestRepositoriesAdd(t *testing.T) {
   assert.Equal(t, repos.Exists("r4"), true)
 }
 
+func TestRepositoriesRemove(t *testing.T) {
+  repos := newRepositories([]Repository {
+    repo("r1", "loc1"), repo("r2", "loc2"),
+  })
+  assert.Equal(t, true, repos.Exists("r2"))
+  repos.Remove("r2")
+  assert.Equal(t, false, repos.Exists("r2"))
+}
+
 func TestRepositoriesGet(t *testing.T) {
   repos := newRepositories([]Repository {
     repo("r1", "loc1"), repo("r2", "loc2"),

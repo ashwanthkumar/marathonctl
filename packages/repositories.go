@@ -40,6 +40,18 @@ func (r *Repositories) Add(repo Repository) *Repositories {
   return r
 }
 
+func (r *Repositories) Remove(repo string) *Repositories {
+  var newRepositories Repositories
+  for _, repository := range *r {
+    if repository.Name != repo {
+      newRepositories = append(newRepositories, repository)
+    }
+  }
+
+  *r = newRepositories
+  return r
+}
+
 func (r *Repositories) Serialize() ([]byte, error) {
   return json.Marshal(r)
 }

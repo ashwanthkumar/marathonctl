@@ -46,6 +46,17 @@ func Add(name, location string) error {
   return WritePackageMetadata()
 }
 
+func Remove(name string) (err error) {
+  AllRepos.Remove(name)
+  packageRepoPath := config.GetPackageCachePath() + "/" + name
+  fmt.Printf("Removing %s from %s\n", name, packageRepoPath)
+  err = os.RemoveAll(packageRepoPath)
+  if err != nil {
+    return err
+  }
+  return WritePackageMetadata()
+}
+
 func Update(name string) (err error) {
   repository := AllRepos.Get(name)
   if repository == nil {
