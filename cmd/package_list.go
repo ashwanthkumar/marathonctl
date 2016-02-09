@@ -2,11 +2,12 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/ashwanthkumar/marathonctl/packages"
 	"github.com/spf13/cobra"
 )
 
-var PackageList = &cobra.Command{
+var packageList = &cobra.Command{
 	Use:   "list",
 	Short: "List all the package repositories",
 	Long:  "List all the package repositories",
@@ -14,12 +15,12 @@ var PackageList = &cobra.Command{
 }
 
 func listPackageRepositories(args []string) (err error) {
-	for _, repository := range *packages.AllRepos {
+	for _, repository := range *packages.List() {
 		fmt.Printf("%s\t%s\n", repository.Name, repository.Loc)
 	}
 	return err
 }
 
 func init() {
-	Package.AddCommand(PackageList)
+	Package.AddCommand(packageList)
 }

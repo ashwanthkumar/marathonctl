@@ -3,38 +3,40 @@ package packages
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
+	"os"
+
 	"github.com/ashwanthkumar/marathonctl/config"
 	fetcher "github.com/hashicorp/go-getter"
 	"github.com/joeshaw/multierror"
-	"io/ioutil"
-	"os"
 )
 
-const INDEX_FILE = "repos.json"
+const repoIndixFile = "repos.json"
 
-var PACKAGE_CACHE_LOCATION string
-var AllRepos *Repositories
+var packageCacheLocation string
+var allRepositories *Repositories
 
 func init() {
-	PACKAGE_CACHE_LOCATION = config.GetPackageCachePath() + "/" + INDEX_FILE
-	data, err := ioutil.ReadFile(PACKAGE_CACHE_LOCATION)
+	packageCacheLocation = config.GetPackageCachePath() + "/" + repoIndixFile
+	data, err := ioutil.ReadFile(packageCacheLocation)
 	if os.IsNotExist(err) {
-		AllRepos = DefaultRepositories()
+		allRepositories = DefaultRepositories()
 	} else {
 		handleErrorIfAny(err)
 	}
-	if AllRepos == nil {
-		AllRepos, err = Deserialize(data)
+	if allRepositories == nil {
+		allRepositories, err = Deserialize(data)
 		handleErrorIfAny(err)
 	}
 }
 
+// Add the new remote repository
 func Add(name, location string) error {
-	if AllRepos.Exists(name) {
+	if allRepositories.Exists(name) {
 		return errors.New(name + " package repository already exist")
 	}
 	fmt.Printf("Adding package repository %s from %s\n", name, location)
-	AllRepos.Add(Repository{
+	allRepositories.Add(Repository{
 		Name: name,
 		Loc:  location,
 	})
@@ -43,22 +45,24 @@ func Add(name, location string) error {
 		return err
 	}
 
-	return WritePackageMetadata()
+	return writePackageMetadata()
 }
 
+// Remove a known remote repository
 func Remove(name string) (err error) {
-	AllRepos.Remove(name)
+	allRepositories.Remove(name)
 	packageRepoPath := config.GetPackageCachePath() + "/" + name
 	fmt.Printf("Removing %s from %s\n", name, packageRepoPath)
 	err = os.RemoveAll(packageRepoPath)
 	if err != nil {
 		return err
 	}
-	return WritePackageMetadata()
+	return writePackageMetadata()
 }
 
+// Update the given remote repository
 func Update(name string) (err error) {
-	repository := AllRepos.Get(name)
+	repository := allRepositories.Get(name)
 	if repository == nil {
 		fmt.Errorf("%s package repository not found\n", name)
 		return errors.New(name + " package repository not found")
@@ -68,9 +72,10 @@ func Update(name string) (err error) {
 	return fetcher.Get(packageRepoPath, repository.Loc)
 }
 
+// UpdateAll remote repositories
 func UpdateAll() error {
 	var Errors multierror.Errors
-	for _, repository := range *AllRepos {
+	for _, repository := range *allRepositories {
 		err := Update(repository.Name)
 		if err != nil {
 			Errors = append(Errors, err)
@@ -79,12 +84,17 @@ func UpdateAll() error {
 	return Errors.Err()
 }
 
-func WritePackageMetadata() error {
-	data, err := AllRepos.Serialize()
+// List all remote repositories
+func List() *Repositories {
+	return allRepositories
+}
+
+func writePackageMetadata() error {
+	data, err := allRepositories.Serialize()
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(PACKAGE_CACHE_LOCATION, data, 0644)
+	return ioutil.WriteFile(packageCacheLocation, data, 0644)
 }
 
 func handleErrorIfAny(err error) {
