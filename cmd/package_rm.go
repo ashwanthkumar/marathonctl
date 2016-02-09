@@ -2,11 +2,12 @@ package cmd
 
 import (
 	"errors"
+
 	"github.com/ashwanthkumar/marathonctl/packages"
 	"github.com/spf13/cobra"
 )
 
-var PackageRm = &cobra.Command{
+var packageRm = &cobra.Command{
 	Use:   "rm <repository>",
 	Short: "Remove a package repository from local cache",
 	Long:  "Remove a package repository from local cache",
@@ -23,5 +24,5 @@ func rmPackageCache(args []string) (err error) {
 }
 
 func init() {
-	Package.AddCommand(PackageRm)
+	packageCommand.AddCommand(packageRm)
 }

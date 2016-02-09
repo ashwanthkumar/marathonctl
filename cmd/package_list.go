@@ -22,5 +22,5 @@ func listPackageRepositories(args []string) (err error) {
 }
 
 func init() {
-	Package.AddCommand(packageList)
+	packageCommand.AddCommand(packageList)
 }

@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var PackageUpdate = &cobra.Command{
+var packageUpdate = &cobra.Command{
 	Use:   "update [repository]",
 	Short: "Update the local package cache",
 	Long:  "Update the local package cache",
@@ -22,5 +22,5 @@ func updatePackageCache(args []string) (err error) {
 }
 
 func init() {
-	Package.AddCommand(PackageUpdate)
+	packageCommand.AddCommand(packageUpdate)
 }

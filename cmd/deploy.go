@@ -12,7 +12,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var Deploy = &cobra.Command{
+var deploy = &cobra.Command{
 	Use:   "deploy <app.json>",
 	Short: "Deploy an app using Marathon's app definition",
 	Long:  "Deploy an app using Marathon's app definition",
@@ -25,19 +25,19 @@ var force bool
 var timeoutInSeconds int
 
 func prepareFlags() {
-	Deploy.PersistentFlags().StringVarP(
+	deploy.PersistentFlags().StringVarP(
 		&environment, "environment", "e", "test", "Environment to deploy")
-	Deploy.PersistentFlags().BoolVarP(
+	deploy.PersistentFlags().BoolVarP(
 		&dryRun, "dry-run", "d", false, "Print the final application configuration but don't deploy")
-	Deploy.PersistentFlags().BoolVarP(
+	deploy.PersistentFlags().BoolVarP(
 		&force, "force", "f", false, "Force deploy the app")
-	Deploy.PersistentFlags().IntVarP(
+	deploy.PersistentFlags().IntVarP(
 		&timeoutInSeconds, "timeout", "t", 60*15, "timeout in seconds for deployment to complete, else we'll fail")
 }
 
 func init() {
 	prepareFlags()
-	MarathonCtl.AddCommand(Deploy)
+	MarathonCtl.AddCommand(deploy)
 }
 
 func performDeploy(args []string) error {
@@ -88,5 +88,5 @@ func performDeploy(args []string) error {
 		}
 	}
 
-	return errors.New("[ERROR] App deployment timed out. Check Marathon UI for more details.")
+	return errors.New("[ERROR] App deployment timed out. Check Marathon UI for more details")
 }

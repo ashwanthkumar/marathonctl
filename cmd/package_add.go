@@ -2,11 +2,12 @@ package cmd
 
 import (
 	"errors"
+
 	"github.com/ashwanthkumar/marathonctl/packages"
 	"github.com/spf13/cobra"
 )
 
-var PackageAdd = &cobra.Command{
+var packageAdd = &cobra.Command{
 	Use:   "add <name> <location>",
 	Short: "Add a package repository to local cache",
 	Long:  "Add a package repository to local cache",
@@ -23,5 +24,5 @@ func addPackageCache(args []string) (err error) {
 }
 
 func init() {
-	Package.AddCommand(PackageAdd)
+	packageCommand.AddCommand(packageAdd)
 }
