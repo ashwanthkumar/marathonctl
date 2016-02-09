@@ -1,8 +1,9 @@
 package packages
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestRepositoriesExist(t *testing.T) {
@@ -47,18 +48,18 @@ func TestRepositoriesSerialize(t *testing.T) {
 	repos := newRepositories([]Repository{
 		repo("universe", "github.com/ashwanthkumar/marathonctl-universe"),
 	})
-	expectedJson := `[{"name":"universe","loc":"github.com/ashwanthkumar/marathonctl-universe"}]`
+	expectedJSON := `[{"name":"universe","loc":"github.com/ashwanthkumar/marathonctl-universe"}]`
 	result, err := repos.Serialize()
 	assert.NoError(t, err)
-	assert.Equal(t, []byte(expectedJson), result)
+	assert.Equal(t, []byte(expectedJSON), result)
 }
 
 func TestDeserialize(t *testing.T) {
-	reposInJson := `[{
+	reposInJSON := `[{
     "name": "universe",
     "loc": "github.com/ashwanthkumar/marathonctl-universe"
   }]`
-	repos, err := Deserialize([]byte(reposInJson))
+	repos, err := Deserialize([]byte(reposInJSON))
 	assert.NoError(t, err)
 	assert.Equal(t, repos.Exists("universe"), true)
 }
