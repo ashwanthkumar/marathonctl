@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 )
 
+// Repository represents the remote repo structure
 type Repository struct {
 	// Name of the source - eg. universe
 	Name string `json:"name"`
@@ -16,7 +17,7 @@ type Repository struct {
 // General location of the file is ~/.marathonctl/repos.source
 type Repositories []Repository
 
-// Do we already know this repo?
+// Exists - Do we already know this repo?
 func (r *Repositories) Exists(repo string) bool {
 	for _, repository := range *r {
 		if repository.Name == repo {
@@ -26,6 +27,7 @@ func (r *Repositories) Exists(repo string) bool {
 	return false
 }
 
+// Get the Repository represented by the name
 func (r *Repositories) Get(repo string) *Repository {
 	for _, repository := range *r {
 		if repository.Name == repo {
@@ -35,11 +37,13 @@ func (r *Repositories) Get(repo string) *Repository {
 	return nil
 }
 
+// Add new repository to the list
 func (r *Repositories) Add(repo Repository) *Repositories {
 	*r = append(*r, repo)
 	return r
 }
 
+// Remove an existing repository, if it exists
 func (r *Repositories) Remove(repo string) *Repositories {
 	var newRepositories Repositories
 	for _, repository := range *r {
@@ -52,16 +56,19 @@ func (r *Repositories) Remove(repo string) *Repositories {
 	return r
 }
 
+// Serialize the Repositories into a JSON []byte
 func (r *Repositories) Serialize() ([]byte, error) {
 	return json.Marshal(r)
 }
 
+// Deserialize from []byte to Repositories
 func Deserialize(data []byte) (*Repositories, error) {
 	var repos Repositories
 	err := json.Unmarshal(data, &repos)
 	return &repos, err
 }
 
+// DefaultRepositories - used the first time marathonctl is invoked
 func DefaultRepositories() *Repositories {
 	defaultRepo := Repository{
 		Name: "universe",
