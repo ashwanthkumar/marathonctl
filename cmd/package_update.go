@@ -1,26 +1,26 @@
 package cmd
 
 import (
-  "github.com/ashwanthkumar/marathonctl/packages"
-  "github.com/spf13/cobra"
+	"github.com/ashwanthkumar/marathonctl/packages"
+	"github.com/spf13/cobra"
 )
 
 var PackageUpdate = &cobra.Command{
-  Use:   "update [repository]",
-  Short: "Update the local package cache",
-  Long:  "Update the local package cache",
-  Run: AttachHandler(updatePackageCache),
+	Use:   "update [repository]",
+	Short: "Update the local package cache",
+	Long:  "Update the local package cache",
+	Run:   AttachHandler(updatePackageCache),
 }
 
 func updatePackageCache(args []string) (err error) {
-  if len(args) > 0 {
-    repository := args[0]
-    return packages.Update(repository)
-  }
+	if len(args) > 0 {
+		repository := args[0]
+		return packages.Update(repository)
+	}
 
-  return packages.UpdateAll()
+	return packages.UpdateAll()
 }
 
 func init() {
-  Package.AddCommand(PackageUpdate)
+	Package.AddCommand(PackageUpdate)
 }

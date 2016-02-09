@@ -1,21 +1,21 @@
 package main
 
 import (
-  "os"
-  "fmt"
+	"fmt"
+	"os"
 
-  "github.com/ashwanthkumar/marathonctl/cmd"
+	"github.com/ashwanthkumar/marathonctl/cmd"
 )
 
 var APP_VERSION = "dev-build"
 
 func main() {
-  setupSignalHandlers()
+	setupSignalHandlers()
 
-  // since we overrie the versions in Makefile
-  cmd.VERSION = APP_VERSION
-  if err := cmd.MarathonCtl.Execute(); err != nil {
-    fmt.Println(err)
-    os.Exit(-1)
-  }
+	// since we overrie the versions in Makefile
+	cmd.VERSION = APP_VERSION
+	if err := cmd.MarathonCtl.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(-1)
+	}
 }
