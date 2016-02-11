@@ -7,8 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var repoList = &cobra.Command{
-	Use:   "list",
+var repoLs = &cobra.Command{
+	Use:   "ls",
 	Short: "List all the package repositories",
 	Long:  "List all the package repositories",
 	Run:   AttachHandler(listPackageRepositories),
@@ -22,5 +22,5 @@ func listPackageRepositories(args []string) (err error) {
 }
 
 func init() {
-	repoCommand.AddCommand(repoList)
+	repoCommand.AddCommand(repoLs)
 }
