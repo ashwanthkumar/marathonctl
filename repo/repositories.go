@@ -1,6 +1,8 @@
 package repo
 
 import (
+	"github.com/ashwanthkumar/marathonctl/config"
+
 	"encoding/json"
 )
 
@@ -11,6 +13,12 @@ type Repository struct {
 	// Location of the source - eg. github.com/ashwanthkumar/marathonctl-universe
 	// We support all the protocols supported by https://github.com/hashicorp/go-getter
 	Loc string `json:"loc"`
+}
+
+// LocationOnDisk returns the physical location on disk
+// where this repository is being maintained
+func (r *Repository) LocationOnDisk() string {
+	return config.GetPackageCachePath() + "/" + r.Name
 }
 
 // Repositories are the source of truth of all the package repositories in the system.

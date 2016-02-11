@@ -50,10 +50,13 @@ func Add(name, location string) error {
 
 // Remove a known remote repository
 func Remove(name string) (err error) {
-	allRepositories.Remove(name)
-	packageRepoPath := config.GetPackageCachePath() + "/" + name
-	fmt.Printf("Removing %s from %s\n", name, packageRepoPath)
-	err = os.RemoveAll(packageRepoPath)
+	repository := allRepositories.Get(name)
+	if repository == nil {
+		return fmt.Errorf("%s package repository not found\n", name)
+	}
+	allRepositories.Remove(repository.Name)
+	fmt.Printf("Removing %s from %s\n", name, repository.LocationOnDisk())
+	err = os.RemoveAll(repository.LocationOnDisk())
 	if err != nil {
 		return err
 	}
@@ -64,12 +67,10 @@ func Remove(name string) (err error) {
 func Update(name string) (err error) {
 	repository := allRepositories.Get(name)
 	if repository == nil {
-		fmt.Errorf("%s package repository not found\n", name)
-		return errors.New(name + " package repository not found")
+		return fmt.Errorf("%s package repository not found\n", name)
 	}
-	fmt.Println("Updating " + name + " package repository from " + repository.Loc)
-	packageRepoPath := config.GetPackageCachePath() + "/" + name
-	return fetcher.Get(packageRepoPath, repository.Loc)
+	fmt.Println("Updating " + repository.Name + " package repository from " + repository.Loc)
+	return fetcher.Get(repository.LocationOnDisk(), repository.Loc)
 }
 
 // UpdateAll remote repositories

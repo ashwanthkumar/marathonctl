@@ -22,5 +22,5 @@ func updateRepoCaches(args []string) (err error) {
 }
 
 func init() {
-	packageCommand.AddCommand(repoUpdate)
+	repoCommand.AddCommand(repoUpdate)
 }
