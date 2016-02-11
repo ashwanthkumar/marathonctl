@@ -3,26 +3,26 @@ package cmd
 import (
 	"errors"
 
-	"github.com/ashwanthkumar/marathonctl/packages"
+	"github.com/ashwanthkumar/marathonctl/repo"
 	"github.com/spf13/cobra"
 )
 
-var packageAdd = &cobra.Command{
+var repoAdd = &cobra.Command{
 	Use:   "add <name> <location>",
 	Short: "Add a package repository to local cache",
 	Long:  "Add a package repository to local cache",
-	Run:   AttachHandler(addPackageCache),
+	Run:   AttachHandler(addRepoCache),
 }
 
-func addPackageCache(args []string) (err error) {
+func addRepoCache(args []string) (err error) {
 	if len(args) != 2 {
 		return errors.New("We need exactly 2 arguments")
 	}
 	name := args[0]
 	location := args[1]
-	return packages.Add(name, location)
+	return repo.Add(name, location)
 }
 
 func init() {
-	packageCommand.AddCommand(packageAdd)
+	repoCommand.AddCommand(repoAdd)
 }

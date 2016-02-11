@@ -16,7 +16,7 @@ all: setup
 	build
 	install
 
-setup:  
+setup:
 	go get github.com/spf13/cobra
 	go get github.com/spf13/viper
 	go get github.com/parnurzeal/gorequest
@@ -33,6 +33,7 @@ test-only:
 
 test:
 	go test github.com/ashwanthkumar/marathonctl/packages
+	go test github.com/ashwanthkumar/marathonctl/repo
 	go test github.com/ashwanthkumar/marathonctl/client
 
 install: build

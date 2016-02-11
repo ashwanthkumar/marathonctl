@@ -1,4 +1,4 @@
-package packages
+package repo
 
 import (
 	"errors"
