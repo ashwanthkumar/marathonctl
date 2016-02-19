@@ -18,7 +18,7 @@ func init() {
 
   err := c.ReadInConfig()
   // ignore the file not found error and catch everything else
-  if !os.IsNotExist(err) {
+  if err != nil && !os.IsNotExist(err) {
     fmt.Printf("%v\n", err)
     os.Exit(1)
   }
