@@ -19,6 +19,7 @@ Usage:
 Available Commands:
   deploy      Deploy an app using Marathon's app definition
   package     Manage packages which needs to be installed on Marathon
+  repo        Manage remote repositories where packages can be installed
   version     Version of the Marathon CLI
 
 Flags:
