@@ -3,8 +3,11 @@
 # Marathon CLI
 CLI tool to access and deploy apps and services to [Marathon](https://mesosphere.github.io/marathon/).
 
+## NOTE
+The master branch is a WIP of package repository feature. Marathonctl as a simple commandline tool to deploy apps to marathon is implemented and you can find the binaries [here](https://github.com/ashwanthkumar/marathonctl/releases). Please use the latest `v0.0.x`. The package manager changes will come in `v0.1.x` series as we're making some non-backward compatible changes.
+
 ## Usage
-You can download a binary distribution from the [releases](https://github.com/ashwanthkumar/marathonctl/releases). 
+You can download a binary distribution from the [releases](https://github.com/ashwanthkumar/marathonctl/releases).
 
 ```
 $ marathonctl
@@ -28,7 +31,7 @@ Use "marathonctl [command] --help" for more information about a command.
 ```
 
 ## Configuration
-You can optionally create a configuration file `$HOME/.marathonctl/config.json` with the following contents, which can be overriden using the above flags. 
+You can optionally create a configuration file `$HOME/.marathonctl/config.json` with the following contents, which can be overriden using the above flags.
 
 ```
 {
@@ -63,10 +66,10 @@ Flags:
 ```
 
 ### Application Definition
-The application definition (`app.json`) that's passed it treated as a [Go Template](https://golang.org/pkg/text/template/) and rendered. The available variables for the template is `{{ .DEPLOY_ENV }}`. 
+The application definition (`app.json`) that's passed it treated as a [Go Template](https://golang.org/pkg/text/template/) and rendered. The available variables for the template is `{{ .DEPLOY_ENV }}`.
 
 #### Using Environment Variables
-You can also access environment variables in your app.json using the convention `{{ .Env.GO_PIPELINE_LABEL }}`, where `GO_PIPELINE_LABEL` is an environment variable. 
+You can also access environment variables in your app.json using the convention `{{ .Env.GO_PIPELINE_LABEL }}`, where `GO_PIPELINE_LABEL` is an environment variable.
 
 Example app.json file could be something like
 ```
