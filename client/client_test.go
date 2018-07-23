@@ -54,7 +54,7 @@ func TestHandleOn422UnprocessableEntity(t *testing.T) {
 	expectedBody := "{\"message\": \"Object is not valid\", \"details\": [{\"path\": \"/healthChecks(0)\",\"errors\": [\"Health check port indices must address an element of the ports array or container port mappings.\"]}]}"
 	assert.Equal(t, body, expectedBody)
 
-	expectedError := errors.New("Error(s): UnprocessableEntity Object is not valid")
+	expectedError := errors.New("Error(s): UnprocessableEntity Health check port indices must address an element of the ports array or container port mappings.")
 	assert.Equal(t, err, expectedError)
 }
 
