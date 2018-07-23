@@ -10,6 +10,11 @@ type Marathon struct {
 	Url string
 }
 
+type ErrorDetails []struct {
+	Path   string   `json:"path"`
+	Errors []string `json:"errors"`
+}
+
 var httpClient = gorequest.New()
 
 func handle(response gorequest.Response, body string, errs []error) (string, error) {
@@ -20,7 +25,11 @@ func handle(response gorequest.Response, body string, errs []error) (string, err
 			if err != nil {
 				errs = append(errs, err)
 			} else {
-				errs = append(errs, errors.New(errorResponse["message"].(string)))
+				if response.StatusCode == 422 {
+					errs = append(errs, errors.New(errorResponse["details"].(ErrorDetails)[0].Errors[0]))
+				} else {
+					errs = append(errs, errors.New(errorResponse["message"].(string)))
+				}
 			}
 		} else if response.StatusCode != 200 && response.StatusCode != 201 {
 			errs = append(errs, errors.New(response.Status))

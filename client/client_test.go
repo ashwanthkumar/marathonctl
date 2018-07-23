@@ -48,6 +48,16 @@ func TestHandleOnNon200Or201WhenBodyIsEmpty(t *testing.T) {
 	assert.Equal(t, err, expectedError)
 }
 
+func TestHandleOn422UnprocessableEntity(t *testing.T) {
+	body, err := handle(createMockResponse(422), createErrorResponseNew("Object is not valid"), []error{errors.New("UnprocessableEntity")})
+
+	expectedBody := "{\"message\": \"Object is not valid\", \"details\": [{\"path\": \"/healthChecks(0)\",\"errors\": [\"Health check port indices must address an element of the ports array or container port mappings.\"]}]}"
+	assert.Equal(t, body, expectedBody)
+
+	expectedError := errors.New("Error(s): UnprocessableEntity Object is not valid")
+	assert.Equal(t, err, expectedError)
+}
+
 func TestHandleNilResponse(t *testing.T) {
 	_, err := handle(nil, createErrorResponse("Invalid Request"), []error{errors.New("InvalidRequest")})
 	expectedError := errors.New("InvalidRequest")
@@ -79,4 +89,9 @@ func createErrorResponse(message string) string {
 		Message: message,
 	}
 	return util.ToJson(err)
+}
+
+func createErrorResponseNew(message string) string {
+	_ = message
+	return "{\"message\": \"Object is not valid\", \"details\": [{\"path\": \"/healthChecks(0)\",\"errors\": [\"Health check port indices must address an element of the ports array or container port mappings.\"]}]}"
 }
